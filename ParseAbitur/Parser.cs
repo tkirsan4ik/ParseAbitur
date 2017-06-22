@@ -237,7 +237,7 @@ namespace ParseAbitur
                     //2. Получаем содержимое файла
                     var html = File.OpenRead(file).ToString();
                     //3. Парсим HTML
-                    //var domHtml = 
+                    var domHtml = "";
                     //4. Убираем из HTML две строки (конкурсная группа и количество мест)
                 }
 
