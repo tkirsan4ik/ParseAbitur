@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Web;
+using AngleSharp;
 
 namespace ParseAbitur
 {
@@ -237,7 +237,12 @@ namespace ParseAbitur
                     //2. Получаем содержимое файла
                     var html = File.OpenRead(file).ToString();
                     //3. Парсим HTML
-                    var domHtml = "";
+                    var parser = new AngleSharp.Parser.Html.HtmlParser();
+                    var document = parser.Parse(html);
+
+
+
+
                     //4. Убираем из HTML две строки (конкурсная группа и количество мест)
                 }
 
