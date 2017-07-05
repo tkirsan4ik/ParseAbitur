@@ -80,7 +80,7 @@ namespace ParseAbitur
         /// <summary>
         /// Регулярка для проверки кодов направлений подготовки
         /// </summary>
-        string regExpCode = @"*\d{2}[-.]?\d{2}[-.]?\d{2}*";
+        string regExpCode = @"\d{2}[-\.]\d{2}[-\.]\d{2}";
 
         /// <summary>
         /// Название направления подготовки
@@ -204,7 +204,9 @@ namespace ParseAbitur
         {
             var result = "";
             //Получаем код направления
-            var code = Regex.Replace(fileName, this.regExpCode, ".");
+            Regex regex = new Regex(this.regExpCode);
+            Match match = regex.Match(fileName);
+            var code = match.Value;
             int i = 0;
             var fName = "";
             //Получаем форму обучения
@@ -235,12 +237,24 @@ namespace ParseAbitur
                 if (newName != "")
                 {
                     //2. Получаем содержимое файла
-                    var html = File.OpenRead(file).ToString();
+                    //var html = File.Open(file,FileMode.Open);
+                    FileStream fstream = File.OpenRead(file);
+                    // преобразуем строку в байты
+                    byte[] array = new byte[fstream.Length];
+                    // считываем данные
+                    fstream.Read(array, 0, array.Length);
+                    // декодируем байты в строку
+                    string html = System.Text.Encoding.Default.GetString(array);
+                    fstream.Close();
+
+
                     //3. Парсим HTML
                     var parser = new AngleSharp.Parser.Html.HtmlParser();
                     var document = parser.Parse(html);
 
-
+                    var table = document.QuerySelector("table");
+                    //Осталось найти только необходимые элементы и их удалить.
+                    var a = 1;
 
 
                     //4. Убираем из HTML две строки (конкурсная группа и количество мест)

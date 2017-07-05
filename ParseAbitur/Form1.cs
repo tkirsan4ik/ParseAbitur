@@ -29,5 +29,12 @@ namespace ParseAbitur
             this.pathFile = folderBrowserDialog1.SelectedPath;
             label1.Text = this.pathFile;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var p = new Parser();
+            p.run(this.pathFile);
+            p.runParser();
+        }
     }
 }
